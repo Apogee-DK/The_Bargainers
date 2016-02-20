@@ -19,3 +19,14 @@ curl ifconfig.co
 collaboration
 ungit
 kpm -v
+ungit
+curl ifconfig.co
+ls
+cd Web/
+ls
+cd Web/
+touch shop.html
+vim shop.html 
+sudo apt-get install vim
+cd -
+sudo apt-get install jQuery
