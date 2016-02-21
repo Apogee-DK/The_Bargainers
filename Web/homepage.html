@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html ng-app="todoApp">
   <head>
     <meta name="google-site-verification" content="PtlTebFoue90iB2Sc9zKLJRERVBuDYqTO50mBJqCgt0"/>
     <link rel="stylesheet" href="http://uaks7607eb57.apogee.koding.io//css/index.css">
@@ -13,7 +13,7 @@
     </div>    
     
     <div id="sidebarlinks">
-        <script>loadingWebPage()</script>
+        
     </div>
         
     <div id="wrapper">
@@ -24,7 +24,22 @@
         </div>
         
         <div id="mainPage" ng-controller="TodoListController as todoList">
-            <h2>List of Items</h2>
+            <span>{{todoList.remaining()}} of {{todoList.todos.length}} remaining</span>
+            [ <a href="" ng-click="todoList.archive()">archive</a> ]
+            <ul class="unstyled">
+                <li ng-repeat="todo in todoList.todos">
+                <label class="checkbox">    
+                    <input type="checkbox" ng-model="todo.done">
+                    <span class="done-{{todo.done}}">{{todo.text}}</span>
+                </label>
+                </li>
+            </ul>
+            
+            <form ng-submit="todoList.addTodo()">
+                <input type="text" ng-model="todoList.todoText"  size="30"
+                       placeholder="add new todo here">
+                <input class="btn-primary" type="submit" value="add">
+            </form>
         </div>
     </div>
 
@@ -37,10 +52,7 @@
     <script type="text/javascript" src="http://uaks7607eb57.apogee.koding.io//js/index_sidebar.js"></script>
     <script type="text/javascript" src="http://uaks7607eb57.apogee.koding.io//js/index.js"></script>
     <script type="text/javascript" src="http://uaks7607eb57.apogee.koding.io//js/index_controller.js"></script>
-    
     <script type="text/javascript" src="https://apis.google.com/js/client.js?onload=OnLoadCallback"></script>
-    <script type="text/javascript" src="http://uaks7607eb57.apogee.koding.io//js/userInformation.js"></script>
-    <script type="text/javascript" src="http://uaks7607eb57.apogee.koding.io//js/authenticationAPI.js"></script>
     <script type="text/javascript" src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>
     
   </body>

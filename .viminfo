@@ -7,11 +7,16 @@
 
 # hlsearch on (H) or off (h):
 ~h
+# Last Search Pattern:
+~Msle0~/\<searchString\>
+
 # Command Line History (newest to oldest):
 :wq
 :.!python3
 
 # Search String History (newest to oldest):
+? \<searchString\>
+??php
 
 # Expression History (newest to oldest):
 
@@ -22,16 +27,152 @@
 # Registers:
 
 # File marks:
-'0  24  64  ~/Web/searchProduct.py
-'1  19  0  ~/Web/searchProduct.py
-'2  1  9  ~/Web/searchProduct.py
+'0  6  0  ~/Web/productSearch.py
+'1  22  18  ~/Web/test2.php
+'2  2  11  ~/Web/test.php
+'3  1  0  ~/Web/test2.php
+'4  54  0  ~/Web/productSearch.py
+'5  24  64  ~/Web/searchProduct.py
+'6  19  0  ~/Web/searchProduct.py
+'7  1  9  ~/Web/searchProduct.py
 
 # Jumplist (newest first):
+-'  6  0  ~/Web/productSearch.py
+-'  16  0  ~/Web/productSearch.py
+-'  1  0  ~/Web/productSearch.py
+-'  22  18  ~/Web/test2.php
+-'  1  0  ~/Web/test2.php
+-'  2  11  ~/Web/test.php
+-'  1  0  ~/Web/test.php
+-'  54  0  ~/Web/productSearch.py
 -'  24  64  ~/Web/searchProduct.py
 -'  1  0  ~/Web/searchProduct.py
 -'  19  0  ~/Web/searchProduct.py
+-'  24  64  ~/Web/searchProduct.py
+-'  1  0  ~/Web/searchProduct.py
+-'  19  0  ~/Web/searchProduct.py
+-'  24  64  ~/Web/searchProduct.py
+-'  1  0  ~/Web/searchProduct.py
+-'  19  0  ~/Web/searchProduct.py
+-'  24  64  ~/Web/searchProduct.py
+-'  1  0  ~/Web/searchProduct.py
+-'  19  0  ~/Web/searchProduct.py
+-'  24  64  ~/Web/searchProduct.py
+-'  1  0  ~/Web/searchProduct.py
+-'  19  0  ~/Web/searchProduct.py
+-'  24  64  ~/Web/searchProduct.py
+-'  1  0  ~/Web/searchProduct.py
+-'  19  0  ~/Web/searchProduct.py
+-'  24  64  ~/Web/searchProduct.py
+-'  1  0  ~/Web/searchProduct.py
+-'  19  0  ~/Web/searchProduct.py
+-'  24  64  ~/Web/searchProduct.py
+-'  1  0  ~/Web/searchProduct.py
+-'  19  0  ~/Web/searchProduct.py
+-'  24  64  ~/Web/searchProduct.py
+-'  1  0  ~/Web/searchProduct.py
+-'  19  0  ~/Web/searchProduct.py
+-'  24  64  ~/Web/searchProduct.py
+-'  1  0  ~/Web/searchProduct.py
+-'  19  0  ~/Web/searchProduct.py
+-'  24  64  ~/Web/searchProduct.py
+-'  1  0  ~/Web/searchProduct.py
+-'  19  0  ~/Web/searchProduct.py
+-'  24  64  ~/Web/searchProduct.py
+-'  1  0  ~/Web/searchProduct.py
+-'  19  0  ~/Web/searchProduct.py
+-'  24  64  ~/Web/searchProduct.py
+-'  1  0  ~/Web/searchProduct.py
+-'  19  0  ~/Web/searchProduct.py
+-'  24  64  ~/Web/searchProduct.py
+-'  1  0  ~/Web/searchProduct.py
+-'  19  0  ~/Web/searchProduct.py
+-'  24  64  ~/Web/searchProduct.py
+-'  1  0  ~/Web/searchProduct.py
+-'  19  0  ~/Web/searchProduct.py
+-'  24  64  ~/Web/searchProduct.py
+-'  1  0  ~/Web/searchProduct.py
+-'  19  0  ~/Web/searchProduct.py
+-'  2  11  ~/Web/test.php
+-'  1  0  ~/Web/test.php
+-'  24  64  ~/Web/searchProduct.py
+-'  1  0  ~/Web/searchProduct.py
+-'  19  0  ~/Web/searchProduct.py
+-'  24  64  ~/Web/searchProduct.py
+-'  1  0  ~/Web/searchProduct.py
+-'  19  0  ~/Web/searchProduct.py
+-'  24  64  ~/Web/searchProduct.py
+-'  1  0  ~/Web/searchProduct.py
+-'  19  0  ~/Web/searchProduct.py
+-'  24  64  ~/Web/searchProduct.py
+-'  1  0  ~/Web/searchProduct.py
+-'  19  0  ~/Web/searchProduct.py
+-'  24  64  ~/Web/searchProduct.py
+-'  1  0  ~/Web/searchProduct.py
+-'  19  0  ~/Web/searchProduct.py
+-'  24  64  ~/Web/searchProduct.py
+-'  1  0  ~/Web/searchProduct.py
+-'  19  0  ~/Web/searchProduct.py
+-'  24  64  ~/Web/searchProduct.py
+-'  1  0  ~/Web/searchProduct.py
+-'  19  0  ~/Web/searchProduct.py
+-'  24  64  ~/Web/searchProduct.py
+-'  1  0  ~/Web/searchProduct.py
+-'  19  0  ~/Web/searchProduct.py
+-'  24  64  ~/Web/searchProduct.py
+-'  1  0  ~/Web/searchProduct.py
+-'  19  0  ~/Web/searchProduct.py
+-'  22  18  ~/Web/test2.php
 
 # History of marks within files (newest to oldest):
+
+> ~/Web/productSearch.py
+	"	6	0
+	^	6	0
+	.	16	0
+	+	1	9
+	+	62	0
+	+	1	9
+	+	4	0
+	+	5	0
+	+	5	63
+	+	9	0
+	+	8	0
+	+	14	0
+	+	18	0
+	+	25	0
+	+	28	0
+	+	16	0
+
+> ~/Web/test2.php
+	"	22	18
+	^	1	5
+	.	24	0
+	+	26	0
+	+	2	0
+	+	2	0
+	+	3	0
+	+	4	1
+	+	5	39
+	+	6	0
+	+	9	0
+	+	10	6
+	+	11	0
+	+	12	0
+	+	13	0
+	+	15	0
+	+	18	0
+	+	21	8
+	+	22	53
+	+	23	0
+	+	24	0
+
+> ~/Web/test.php
+	"	2	11
+	^	2	12
+	.	2	11
+	+	3	1
+	+	2	11
 
 > ~/Web/searchProduct.py
 	"	24	64

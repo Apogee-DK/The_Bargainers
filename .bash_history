@@ -30,3 +30,82 @@ vim shop.html
 sudo apt-get install vim
 cd -
 sudo apt-get install jQuery
+ls
+cd Web/
+ls
+vim searchProduct.py
+python searchProduct.py 
+pip install requests
+kpm install pip
+pip install bs4
+pip install beautifulsoup4
+sudo apt-get install pyhton3.4
+sudo apt-get install pyhton-3.4
+sudo apt-get install python-3.4
+sudo apt-get install python3.4
+apt-get install python-bs4
+sudo apt-get install python-bs4
+python searchProduct.py 
+searchProduct.py 
+python3 searchProduct.py 
+pip install requests
+python3 searchProduct.py 
+python searchProduct.py 
+vim searchProduct.py 
+python searchProduct.py 
+echo YEY
+echo YEY IT WORKS
+python searchProduct.py 
+cd -
+ungit
+ls
+cd Web/
+ls
+touch test2.php
+vim test2.php 
+ls
+rm searchProduct.py 
+vim productSearch.py
+ls
+vim test2.php
+vim test.php
+vim test2.php
+vim productSearch.py
+pip install --upgrade google-api-python-client
+sudo pip install --upgrade google-api-client
+exit
+sudo pip install --upgrade google-api-python-client
+sudo pip install --upgrade oauth2client
+python product_list.py <110067946>
+python product_list.py 110067946
+dir
+cd Web
+ls
+python product_list.py 110067946
+sudo pip install -g google-api-python-client
+sudo pip -g install google-api-python-client
+sudo pip install google-api-python-client
+sudo pip --upgrade google-api-python-client
+python
+python product_list.py
+cd Web
+python product_list.py
+ls
+python product_list.py <110067946>
+python product_list.py 110067946
+sudo pip install --upgrade oauth2client
+sudo pip --upgrade google-api-python-client
+sudo pip install --upgrade google-api-python-client
+cd
+cd WEb
+cd Web
+ls
+python product_list.py 110067946
+python productSearch.py 110067946
+cd Web
+cd php-python
+python productSearch.py 110067946
+cd -
+python product_list.py 110067946
+cd Web
+python product_list.py 110067946

@@ -20,18 +20,17 @@ var options = [
         
         link0 = [
             'http://uaks7607eb57.apogee.koding.io/homepage.html',
-            'http://uaks7607eb57.apogee.koding.io/shop.html',
+            'http://uaks7607eb57.apogee.koding.io/shop.php',
             'http://uaks7607eb57.apogee.koding.io/login.html'
             ],
         
         link1 = [
             'http://uaks7607eb57.apogee.koding.io/homepage.html', 
-            'http://uaks7607eb57.apogee.koding.io/shop.html', 
+            'http://uaks7607eb57.apogee.koding.io/shop.php', 
             'http://uaks7607eb57.apogee.koding.io/wishlist.html', 
             'http://uaks7607eb57.apogee.koding.io/logout.html'
             ]
     ];
-
 
 function makeUL(array, link) {
     // Create the list element:
@@ -47,7 +46,7 @@ function makeUL(array, link) {
         a.appendChild(document.createTextNode(array[i]));
         a.title = array[i];
         a.href = link[i];
-        a.className = "links"
+        a.id = a.title;
         
         item.appendChild(a);
         
