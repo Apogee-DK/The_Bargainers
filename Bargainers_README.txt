@@ -1,5 +1,22 @@
 //lenny
 
+
+TODOs:
+- Fix blank SEARCH results
+- Wishlist page
+- Shop Wishlist pop upon click
+    - Submit and Cancel buttons
+- User Database and product updates
+- Show lowest price in search results
+- Homepage (Introduction)
+
+With time:
+- Alter layout of webpage using CSS templates
+- Change style of buttons
+- Change style of search
+- Finish About Us webpage
+
+
 Web Application which tracks the price of a list of products which the user chooses upon their visit on our website:
 
 - Lowest Price

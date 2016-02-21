@@ -1,6 +1,6 @@
 <?php
 
-include('php-python/db_connect.php');
+include('php-python/db_connect.php');              //needed for DB connection
 
 if (isset($_POST['submit']) && isset($_POST['searchQuery']))
 
@@ -134,7 +134,7 @@ $allProducts = array();
                     $date = "'" . date('Y-m-d h:i:s') . "'";
                     
                     $sql = " INSERT INTO Product (webID, name, URL, productID, lowestPrice, DateAdded, photoURL, description ) 
-                           VALUES ( $webID, $name, $URL, $productID, $lowestPrice,$date ,  $photoURL, 'some description')";                                         
+                           VALUES ( $webID, $name, $URL, $productID, $lowestPrice,$date , $photoURL, 'some description')";                                         
                     
                    // echo $sql;
                 
@@ -153,16 +153,44 @@ $allProducts = array();
   //###################################################################
 }
 elseif (isset($_POST['submitWish'])) {             //wishlist
-    
-    
-    
+  
     echo "WISHLIST SAVE";
     
      //now this is an underscore-separated values that corresponds to webID of seleted Items
-    echo $_POST['webID'];          
+    echo $_POST['selectedWebIDs'];          
     
     //this string should then be saved to the database, indicating the users wishlist
+    
+    
+    $conn = setUpConnection(); 
+    
+    
+    //TODO establish user AUTHENTICATION and registration
+    
+    //SAVE INTO database, update productList (WISHLIST) of logged-in user
 
+    // we assume a user is logged in and these info are already stored in database
+    $userID = 1;
+    $username = 'user1';
+    $password = 'userone';
+    $address = '123 Fake Street';
+    $phone = '123-456-7810';
+    
+    
+    $productList = $_POST['selectedWebIDs'];
+    
+    
+        $sql = " UPDATE UserAccount 
+                 SET productList ='" . $productList . "'" .
+              " WHERE username ='" . $username . "'" .
+              " AND password ='" . $password . "';";
+                                                
+    
+        echo $sql;
+
+        if ($conn->query($sql) === TRUE)  ;
+        else 
+            echo "Update Error: " . $sql . "<br>" . $conn->error;
   
 }
 
@@ -197,6 +225,27 @@ elseif (isset($_POST['submitWish'])) {             //wishlist
             <p>Come here to find the cheapest products online!</p>
         </div>
         
+        
+    <div id="wishMenu">
+            <table id="wishListMenu">
+                <thead>
+                    <tr>
+                        <th class="text-left">List of Items</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                
+                
+                
+                </tbody>
+            </table>
+            <span>
+                <input id="submitWish" type="submit" value="Add to List" name="submitWish">
+                <input id="cancelWish" type="submit" value="Cancel" name="submitWish">
+            </span>
+    </div>
+    
+    
     
     <div id="mainPage">
         <div class="table-title">
@@ -215,9 +264,11 @@ elseif (isset($_POST['submitWish'])) {             //wishlist
                 </thead>
         
                 <tbody class="table-hover">
+
+                
                                  <div>
                                    <form method="POST" name="productWish" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-                                                            
+                                    <!--form method="POST" name="productWish" action="wishlist.php"-->                        
                                     	   <?php  if (isset($allProducts)) 
                                     	   
                                     	   
@@ -244,8 +295,13 @@ elseif (isset($_POST['submitWish'])) {             //wishlist
                                                 
                                                 
                                                 $webID =  md5($currentItem["URL"]);
-                                                //$webIDtemp .=  "_" . md5($currentItem["URL"]);
-                                                //$productIDtemp .= "," . $productID;
+
+                                               // $webIDtemp .=  md5($currentItem["URL"]) .  ",";
+                                               
+                                               $name = $currentItem["Name"];
+                                               $url = $currentItem["URL"];
+                                               $price = $currentItem["Price"];
+                                               $photo = $currentItem["Photo"];
                                                 
                                             
                                                  echo '<td class="text-left">' . $currentItem["Name"]  . '</td>';
@@ -255,9 +311,26 @@ elseif (isset($_POST['submitWish'])) {             //wishlist
                                                  
                                                  echo "<div style='display:none;'> 
                                                     <input type='hidden' id='webID' name='webID' value='$webID' />
-                                                 </div></td>";
+                                                 </div>";
                                                  
-                                                 echo "</tr>";
+                                                 echo "<div style='display:none;'> 
+                                                    <input type='hidden' id='name' name='name' value='$name' />
+                                                 </div>";
+                                                 
+                                                 echo "<div style='display:none;'> 
+                                                    <input type='hidden' id='Price' name='Price' value='$price' />
+                                                 </div>";
+                                                 
+                                                 echo "<div style='display:none;'> 
+                                                    <input type='hidden' id='URL' name='url' value='$url' />
+                                                 </div>";
+                                                 
+                                                 
+                                                 echo "<div style='display:none;'> 
+                                                    <input type='hidden' id='Photo' name='Photo' value='$photo' />
+                                                 </div>";
+                                                 
+                                                 echo "</td></tr>";
                                               
                                              
                                             } //	echo $result;  
@@ -265,42 +338,23 @@ elseif (isset($_POST['submitWish'])) {             //wishlist
                                                 //THIS WOULD PASS THE webID to POST for PHP when Save to Wishlist is clicked
 
                                                  //HIDDEN INPUT
-                                                 echo "<input type='hidden' id='selectedWebIDs' name='selectedWebIDs' value='' />";
-                                            
-                                    	    ?>
-	    
-	                                        <!-- WISHLIST BUTTON ---------------->
-    	                        	    	<span>
-    	                        	    	<?php if (!empty($allProducts))
-    	                        	    	    // only add this button when there are products to be added (when query is submitted and result are scraped)
-    											echo '<input id="submitWish" type="submit" value="ADD TO WISHLIST" name="submitWish">';
-    										?>
-    										</span>
-            	    
-                    	            </form>
-                        </div>
+                                                 echo "<input class='wishItems' type='hidden' id='selectedWebIDs' name='selectedWebIDs' value='' />";
 
-	    
-	            </tbody>
-	        </table>
-	    </div>
-    </div>
+
+                            
+                                                 echo '<span>
+											        <input id="submitWish" type="submit" value="SAVE WISHLIST" name="submitWish">
+										        </span>';
+
+                                    	    ?>
+                    	            </form>
+                            </div>
+	                </tbody>
+	            </table>
+	        </div>
+        </div>
     
-    
-    <div id="wishMenu">
-            <table id="wishListMenu">
-                <thead>
-                    <tr>
-                        <th class="text-left">List of Items</th>
-                    </tr>
-                </thead>
-                <tbody id="tableBody">
-                    <tr>
-                        <td>one</td>
-                    </tr>
-                </tbody>
-            </table>
-    </div>
+
     
     
     <div id="searchQuery">
@@ -324,7 +378,12 @@ elseif (isset($_POST['submitWish'])) {             //wishlist
     <script type="text/javascript" src="https://apis.google.com/js/client.js?onload=OnLoadCallback"></script>
     <script type="text/javascript" src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>
 
-    
+    <script>
+        $("#submitWish").on("click", function(){
+            
+            
+        })
+    </script>
     
   </body>
 </html>

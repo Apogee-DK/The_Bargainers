@@ -104,14 +104,15 @@ input[type=text], input[type=password], textarea {
     color: #eee;
     position: fixed; /*We want it to be a fixed position --> specifically drawn in place where we want it to be*/
     height: auto;
-    width: 100px;
-    overflow: hidden; /*Anything going over will be hidden*/
+    width: 150px;
     right: 0;
-    margin: 100px 0 0 0;
+    margin-right: -150px;
 }
 
     #wishMenu .notEmpty{
-        right: 100px;
+        margin-right: 150px;
+        overflow: visible;
+        
     }
     
     #wishListMenu{
