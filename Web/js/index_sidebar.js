@@ -14,6 +14,7 @@ showhidebutton.onclick = function (){
     wrapper.classList.toggle('hide-sidebar');
 }
 
+//Setting up the type of menu items depending on login information
 var options = [
         set0 = ['Home','Search Products', 'About Us', 'Log Out'],
         set1 = ['Home', 'Shop', 'Wish List', 'About Us', 'Log Out'],
@@ -71,4 +72,3 @@ else{
 }
 
 }) ();
-

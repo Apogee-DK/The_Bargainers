@@ -32,7 +32,7 @@ div.table-title {
   animation: float 5s infinite;
   vertical-align: middle;
 }
- 
+
 #searchInput{
         font-size: 40px;
         text-align: center;
@@ -87,7 +87,7 @@ tr:hover td {
 }
 
 /*For selections*/
-.Unselected td {
+.Selected td {
   background:#4E5066;
   color:#FFFFFF; 
 }

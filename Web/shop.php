@@ -1,13 +1,13 @@
 <?php
 
+include('php-python/db_connect.php');
+
 if (isset($_POST['submit']) && isset($_POST['searchQuery']))
 
 {
 	$query = $_POST['searchQuery'];
 	$JSONresult = exec('python ./php-python/NCIXsearch.py ' . $query );
 	$JSONresult2 = exec('python ./php-python/newegg.py ' . $query );
-	
-
 	
 	//$myDict = json_decode(file_get_contents('/tmp/mydict'));
 	
@@ -40,12 +40,10 @@ $allProducts = array();
      
       //\xa0 is actually non-breaking space in Latin1 (ISO 8859-1), also chr(160). You should replace it with a space.
       
-       $itemExplode = str_replace('\xa0', ' ', $value );    
-       
+         $itemExplode = str_replace('\xa0', ' ', $value );    
          $itemExplode = str_replace("'", '"' ,$itemExplode);                  //replace single quotes with double quotes
-        
-        $itemExplode = str_replace(': u"', ': "' , $itemExplode);      //remove unicode mark
-        array_push($allProducts, $itemExplode );
+         $itemExplode = str_replace(': u"', ': "' , $itemExplode);      //remove unicode mark
+         array_push($allProducts, $itemExplode );
         //echo $itemExplode;
         //var_dump(json_decode($itemExplode));
         
@@ -57,20 +55,115 @@ $allProducts = array();
      // echo $value;
      
       //\xa0 is actually non-breaking space in Latin1 (ISO 8859-1), also chr(160). You should replace it with a space.
-      
        $itemExplode = str_replace('\xa0', ' ', $value );    
-       
          $itemExplode = str_replace("'", '"' ,$itemExplode);                  //replace single quotes with double quotes
-        
         $itemExplode = str_replace(': u"', ': "' , $itemExplode);      //remove unicode mark
-        
-        //$itemExplode = str_replace('"$', '"' , $itemExplode);  //remove $ sign
-        
+
         array_push($allProducts, $itemExplode );
         //echo $itemExplode;
         //var_dump(json_decode($itemExplode));
         
   }
+  
+  //array_pop($allProducts);          //pop weird empty element at the end
+
+  //########################### SAVE TO DATABASE #############################
+  
+ // session_start();
+  
+  //$authenticated = false;
+  
+  
+    $productList = array();
+  
+      	//prepare database connection
+    	$conn = setUpConnection();
+  
+        for ($y = 0; $y < count($allProducts); $y++) {
+
+            $currentItem = json_decode($allProducts[$y], true);         //decode JSON from python script
+
+            //each JSON is in associative (Key-value pair) format
+            // "URL"=>"", "Name"=>"", "Price"=>0.00, ...
+
+             $webID =  md5($currentItem["URL"])  ; 
+            
+            
+            //###### CHECK if current product is already in Database #########
+            
+            $sql = "SELECT * 
+                    FROM Product
+                    WHERE webID = '" . $webID . "';";
+                    
+           // echo $sql;
+
+            $duplicate = $conn->query($sql);
+            
+           // echo ("numrows:" . $duplicate->num_rows);
+            
+            //FOR CHECKING, print the duplicates
+            //while($row = $duplicate->fetch_assoc()) {
+                //echo $row["webID"];   
+            //}
+            
+            
+            if ($duplicate->num_rows == 0)          //if there is no duplicates  
+            {
+                    //need to attach '' for MySQL strings
+                    
+                    $webID =  "'" . $webID . "'"   ; 
+                    $productID =  substr($currentItem["Name"], 20);     
+                    $productID = "'" . str_replace(' ', '', $productID) ."'" ;      //strip spaces
+                    
+                    $name = "'" . $currentItem["Name"] . "'" ;
+                    $URL = "'" . $currentItem["URL"] . "'" ;
+        
+                    $lowestPrice = $currentItem["Price"] ;
+                    $photoURL = "'" . $currentItem["Photo"] . "'"   ;
+                    
+                    
+                    //$currentItem["webID"] = $webID;
+            
+                	//prepared statements
+                    /*	$stmt = $conn->prepare("INSERT INTO Product (webID, name, URL, productID, lowestPrice, DateAdded, photoURL, description ) 
+                    	                        VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+                    	$stmt->bind_param("ssssdsss", $webID, $name, $URL, $productID, $lowestPrice, date('Y-m-d h:i:s'),  $photoURL, "some description");
+                    	$stmt->execute();
+                    */
+                
+                    $date = "'" . date('Y-m-d h:i:s') . "'";
+                    
+                    $sql = " INSERT INTO Product (webID, name, URL, productID, lowestPrice, DateAdded, photoURL, description ) 
+                           VALUES ( $webID, $name, $URL, $productID, $lowestPrice,$date ,  $photoURL, 'some description')";                                         
+                    
+                   // echo $sql;
+                
+                // ERROR INFO
+                    //if ($conn->query($sql) === TRUE)  ;
+                    //else 
+                    //    echo "Error: " . $sql . "<br>" . $conn->error;
+                
+            }
+        } //	end for 
+
+  
+  $conn->close();
+  
+  
+  //###################################################################
+}
+elseif (isset($_POST['submitWish'])) {             //wishlist
+    
+    
+    
+    echo "WISHLIST SAVE";
+    
+     //now this is an underscore-separated values that corresponds to webID of seleted Items
+    echo $_POST['webID'];          
+    
+    //this string should then be saved to the database, indicating the users wishlist
+
+  
 }
 
 
@@ -107,11 +200,14 @@ $allProducts = array();
     
     <div id="mainPage">
         <div class="table-title">
-            <h3>Search Results</h3>
+            <?php  if (isset($_POST['searchQuery'])) 
+            echo "<h3>Search Results</h3>";
+            ?>
             <table class="table-fill">
                 <thead>
                     <tr>
                         <th class="text-left">Name</th>
+                        <!--th class="text-left">Lowest Price</th--> 
                         <th class="text-left">Price</th>
                         <th class="text-left">URL</th>
                         <th class="text-left">Photo</th>
@@ -119,33 +215,91 @@ $allProducts = array();
                 </thead>
         
                 <tbody class="table-hover">
-            
-	   <?php  if (isset($allProducts)) 
-	
-	    for ($x = 1; $x <= count($allProducts); $x++) {
-	        echo ' <tr id=searchR' . $x . '> ';
-            //echo "Product $x:  $productArray[$x] <br />";
-            //var_dump(json_decode($productArray[$x], true));
-            $currentItem = json_decode($allProducts[$x], true);
-            
-        
-             echo '<td class="text-left">' . $currentItem["Name"]  . '</td>';
-             echo '<td class="text-left"> $' . $currentItem["Price"]  . '</td>';
-             echo '<td class="text-left"><a target="_blank" href=" ' . $currentItem["URL"]  . ' ">' . $currentItem["URL"] . '  </td>';
-             echo '<td class="text-left"><img src="' . $currentItem["Photo"]  . '"/> </td>';
-             echo "</tr>";
-          
-         
-        } //	echo $result;  
-	    ?>
+                                 <div>
+                                   <form method="POST" name="productWish" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+                                                            
+                                    	   <?php  if (isset($allProducts)) 
+                                    	   
+                                    	   
+                                            $webIDtemp = "";
+                                	        $productIDtemp = "";
+                                	
+      
+                                    	    for ($x = 0; $x < count($allProducts); $x++) {
+                                    	        echo ' <tr id=searchR' . $x . '> ';
+                                    	        
+                                                
+                                                $currentItem = json_decode($allProducts[$x], true);
+                                                
+                                                
+                                                //ADDED TO PRODUCE the webID
+                                                $productID =  substr($currentItem["Name"], 20);     
+                                                $productID = "'" . str_replace(' ', '', $productID) ."'" ;      //strip spaces
+           
+                                                //TODO
+                                                 //echo "<input type='checkbox'/>";
+                                                //accumulate the webID and productID, a selection mechanism should determine only the ones selected
+                                                
+                                                //need a script which checks which ones are selected
+                                                
+                                                
+                                                $webID =  md5($currentItem["URL"]);
+                                                //$webIDtemp .=  "_" . md5($currentItem["URL"]);
+                                                //$productIDtemp .= "," . $productID;
+                                                
+                                            
+                                                 echo '<td class="text-left">' . $currentItem["Name"]  . '</td>';
+                                                 echo '<td class="text-left"> $' . $currentItem["Price"]  . '</td>';
+                                                 echo '<td class="text-left"><a target="_blank" href=" ' . $currentItem["URL"]  . ' ">' . $currentItem["URL"] . '  </td>';
+                                                 echo '<td class="text-left"><img src="' . $currentItem["Photo"]  . '"/>'; 
+                                                 
+                                                 echo "<div style='display:none;'> 
+                                                    <input type='hidden' id='webID' name='webID' value='$webID' />
+                                                 </div></td>";
+                                                 
+                                                 echo "</tr>";
+                                              
+                                             
+                                            } //	echo $result;  
+                                                
+                                                //THIS WOULD PASS THE webID to POST for PHP when Save to Wishlist is clicked
+
+                                                 //HIDDEN INPUT
+                                                 echo "<input type='hidden' id='selectedWebIDs' name='selectedWebIDs' value='' />";
+                                            
+                                    	    ?>
+	    
+	                                        <!-- WISHLIST BUTTON ---------------->
+    	                        	    	<span>
+    	                        	    	<?php if (!empty($allProducts))
+    	                        	    	    // only add this button when there are products to be added (when query is submitted and result are scraped)
+    											echo '<input id="submitWish" type="submit" value="ADD TO WISHLIST" name="submitWish">';
+    										?>
+    										</span>
+            	    
+                    	            </form>
+                        </div>
+
+	    
 	            </tbody>
 	        </table>
 	    </div>
     </div>
     
-    <div>
-            
-            
+    
+    <div id="wishMenu">
+            <table id="wishListMenu">
+                <thead>
+                    <tr>
+                        <th class="text-left">List of Items</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <tr>
+                        <td>one</td>
+                    </tr>
+                </tbody>
+            </table>
     </div>
     
     
@@ -157,13 +311,6 @@ $allProducts = array();
 	        </span>
         </form>
     </div>
-    
-    
-    
-    
-    
-    
-    
 
     <div id="footer">
         &copy; 2015 The Bargainers Ltd.
@@ -173,16 +320,10 @@ $allProducts = array();
     <button id="authorize-button" style="visibility: hidden">Authorize</button>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
     <script type="text/javascript" src="http://uaks7607eb57.apogee.koding.io//js/index_sidebar.js"></script>
+    <script type="text/javascript" src="http://uaks7607eb57.apogee.koding.io//js/shop.js"></script>
     <script type="text/javascript" src="https://apis.google.com/js/client.js?onload=OnLoadCallback"></script>
     <script type="text/javascript" src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>
-    <script type="text/javascript">
-            $(document).ready(function(){
-                $('.table-hover tr').click(function(){
-                    $(this).toggleClass("Unselected");
-                    //add selection here
-                });
-            });
-    </script>
+
     
     
   </body>

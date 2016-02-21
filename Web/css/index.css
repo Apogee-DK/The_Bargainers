@@ -62,11 +62,12 @@ input[type=text], input[type=password], textarea {
 
 
 #wrapper {
-     margin: 0 0 0 250px; /*top right bottom left*/
-     -moz-transition: margin-left ease .25s;
-     -o-transition: margin-left ease .25s;
-     -webkit-transition: margin-left ease .25s;
-     transition: margin-left ease .25s;
+    height: 100%;
+    margin: 0 100px 0 250px; /*top right bottom left*/
+    -moz-transition: margin-left ease .25s;
+    -o-transition: margin-left ease .25s;
+    -webkit-transition: margin-left ease .25s;
+    transition: margin-left ease .25s;
 }
 
      #wrapper.hide-sidebar {
@@ -85,7 +86,6 @@ input[type=text], input[type=password], textarea {
           list-style-type: none; /* Remove bullet points*/
      }
 
-
 /*# is the id that you give to a certain div*/
 #main {
     height: 92px; /*height of your side bar - padding*2*/ 
@@ -98,6 +98,25 @@ input[type=text], input[type=password], textarea {
     padding: 4px;
     margin: 0;
 }
+
+#wishMenu {
+    background: #ffd800;
+    color: #eee;
+    position: fixed; /*We want it to be a fixed position --> specifically drawn in place where we want it to be*/
+    height: auto;
+    width: 100px;
+    overflow: hidden; /*Anything going over will be hidden*/
+    right: 0;
+    margin: 100px 0 0 0;
+}
+
+    #wishMenu .notEmpty{
+        right: 100px;
+    }
+    
+    #wishListMenu{
+        font-style: normal;
+    }
 
 #footer {
      background-color: #222;
