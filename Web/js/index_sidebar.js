@@ -15,8 +15,8 @@ showhidebutton.onclick = function (){
 }
 
 var options = [
-        set0 = ['Home Page','Shop', 'Log In'],
-        set1 = ['Home Page', 'Shop', 'Wish List','Log Out'],
+        set0 = ['Home','Search Products', 'About Us', 'Log Out'],
+        set1 = ['Home', 'Shop', 'Wish List', 'About Us', 'Log Out'],
         
         link0 = [
             'http://uaks7607eb57.apogee.koding.io/homepage.html',
@@ -34,6 +34,8 @@ var options = [
 
 function makeUL(array, link) {
     // Create the list element:
+    var nav = document.createElement('nav');
+    
     var list = document.createElement('ul');
     list.className = "sidemenu";
 
@@ -52,10 +54,12 @@ function makeUL(array, link) {
         
         // Add it to the list:
         list.appendChild(item);
+        
+        nav.appendChild(list);
     }
 
     // Finally, return the constructed list:
-    return list;
+    return nav;
 }
 
 // Add the contents of options[0] to #foo:

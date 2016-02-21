@@ -109,3 +109,4 @@ cd -
 python product_list.py 110067946
 cd Web
 python product_list.py 110067946
+ungit

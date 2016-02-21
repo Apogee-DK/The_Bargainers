@@ -95,8 +95,7 @@ $allProducts = array();
         <button id="sidebarToggle">Toggle Menu</button>
     </div>    
     
-    <div id="sidebarlinks">
-    </div>
+    <div id="sidebarlinks"></div>
         
     <div id="wrapper">
 
@@ -144,7 +143,11 @@ $allProducts = array();
 	    </div>
     </div>
     
-    <script>getPartialID()</script>
+    <div>
+            
+            
+    </div>
+    
     
     <div id="searchQuery">
         <form method="POST" name="productSearch" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
@@ -154,6 +157,12 @@ $allProducts = array();
 	        </span>
         </form>
     </div>
+    
+    
+    
+    
+    
+    
     
 
     <div id="footer">
@@ -167,13 +176,12 @@ $allProducts = array();
     <script type="text/javascript" src="https://apis.google.com/js/client.js?onload=OnLoadCallback"></script>
     <script type="text/javascript" src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>
     <script type="text/javascript">
-        function selection(){
-            var temp = $('tr[id^="searchR"]');
-            temp.bind("click", function(){
-                    temp.toggleClass("Unselected"); 
+            $(document).ready(function(){
+                $('.table-hover tr').click(function(){
+                    $(this).toggleClass("Unselected");
+                    //add selection here
+                });
             });
-        }
-        selection();
     </script>
     
     
