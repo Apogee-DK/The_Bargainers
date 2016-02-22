@@ -1,0 +1,64 @@
+/*Set a certain rule for a div*/
+body {
+     font-family: sans-serif;
+     font-size: 14px;
+     margin: 0;
+}
+
+label {
+     font-weight: bold;
+     display: block;
+}
+
+#wrapper {
+    height: 100%;
+    margin: 0 0 0 250px; /*top right bottom left*/
+}
+
+
+/*# is the id that you give to a certain div*/
+#main {
+    height: 40px; /*height of your side bar - padding*2*/
+    background-color: #eee;
+    padding: 10px;
+    margin: 0;
+}
+
+#mainPage {
+    padding: 4px;
+    margin: 0;
+}
+
+#wishMenu {
+    background: #ffd800;
+    color: #eee;
+    position: fixed; /*We want it to be a fixed position --> specifically drawn in place where we want it to be*/
+    height: auto;
+    overflow: visible;
+    width: 150px;
+    top: 0;
+    right: 0;
+}
+
+    #wishListMenu{
+        font-style: normal;
+    }
+
+#footer {
+     background-color: #222;
+     color: #eee;
+     padding: 8px 5px;
+     position: fixed;
+     bottom: 0;
+     left: 0;
+     width: 100%;
+}
+
+/*. indicates which class you are trying to modify, think of it as a class of objects*/
+.headshot {
+     background-color: #eee;
+     max-width: 50px;
+     border: 1px solid #222;
+     padding: 1px;
+}
+

@@ -1,8 +1,12 @@
 <?php
 include('php-python/db_connect.php');              //needed for DB connection
 
+
+//print_r ($_POST);
+
 if (isset($_POST['submit']))
 {
+
 	$query = $_POST['submit'];
 	$JSONresult = exec('python ./php-python/NCIXsearch.py ' . $query );
 	$JSONresult2 = exec('python ./php-python/newegg.py ' . $query );
@@ -27,7 +31,6 @@ if (isset($_POST['submit']))
   //echo $itemArray[0];
 
 $allProducts = array();
-
 
   foreach ($itemArray as $value) {
 
@@ -58,6 +61,43 @@ $allProducts = array();
         //var_dump(json_decode($itemExplode));
 
   }
+
+
+//############## GET CHEAPEST FROM DATABASE ####################
+  $conn = setUpConnection();
+//SELECT A.webID, MIN(A.lowestPrice) AS minPrice
+        //FROM
+        //(
+
+
+//######### CHEAPEST IN DB #####################
+
+
+$sql = "SELECT *
+        FROM Product
+        WHERE lowestPrice =  (SELECT MIN(lowestPrice)
+        FROM Product
+        WHERE name  LIKE '%" . $query   ."%') ;";
+
+$result = $conn->query($sql);
+
+
+if ($result->num_rows > 0) {
+
+   // $cheapestInDB = $result->fetch_assoc();
+
+    //echo 'results found:';
+
+   // while($row = $result->fetch_assoc()) {
+    //    echo $row['lowestPrice'];
+   // }
+}
+
+$conn->close();
+
+//######################################################
+
+
 
   //array_pop($allProducts);          //pop weird empty element at the end
   //########################### SAVE TO DATABASE #############################
@@ -141,13 +181,15 @@ $allProducts = array();
   //###################################################################
 
 
-else if(isset($_POST['submitWish'])){
+else if(isset($_POST['submitWishList'])){
 
     echo "WISHLIST SAVE";
 
+
+
     echo $_POST['source1'];
 
-//now this is an underscore-separated values that corresponds to webID of seleted Items
+//now this is an comma-separated values that corresponds to webID of seleted Items
 //echo $_POST['selectedWebIDs'];
 //this string should then be saved to the database, indicating the users wishlist
         $conn = setUpConnection();
@@ -183,23 +225,52 @@ else if(isset($_POST['submitWish'])){
   <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
     <meta name="google-site-verification" content="PtlTebFoue90iB2Sc9zKLJRERVBuDYqTO50mBJqCgt0"/>
-    <link rel="stylesheet" href="http://uaks7607eb57.apogee.koding.io//css/index.css">
+    <link rel="stylesheet" href="http://uaks7607eb57.apogee.koding.io//css/sidebar.css">
+    <link rel="stylesheet" href="http://uaks7607eb57.apogee.koding.io//css/viewpage.css">
     <link rel="stylesheet" href="http://uaks7607eb57.apogee.koding.io//css/shop.css">
     <link rel="stylesheet" href="http://uaks7607eb57.apogee.koding.io//css/searchToolbar.css">
     <meta charset="utf-8" />
-    <title>Table Style</title>
+    <title>The Bargainers</title>
     <meta name="viewport" content="initial-scale=1.0; maximum-scale=1.0; width=device-width;">
   </head>
 
   <body>
+    <nav class="main-menu">
+        <ul>
+            <li>
+                <a href="http://uaks7607eb57.apogee.koding.io/homepage_userloggedIn.html"><i class="fa fa-home fa-2x"></i> <span class=
+                "nav-text">Home</span></a>
+            </li>
 
-    <div id="sidebarinfo">
-        <img src="https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAXaAAAAJGIxNDMxZTA5LTlkMzMtNGZkNi1iY2E1LTE1ZGYzMGRmYTk1OA.jpg" alt="Headshot" class="headshot"/>
-        <span id="username">Guest</span>
-        <button id="sidebarToggle">Toggle Menu</button>
-    </div>
+            <li>
+                <a href="http://uaks7607eb57.apogee.koding.io/shop.php"><i class="fa fa-shopping-cart fa-2x"></i> <span class=
+                "nav-text">Search Products</span></a>
+            </li>
 
-    <div id="sidebarlinks"></div>
+            <li>
+                <a href="http://uaks7607eb57.apogee.koding.io/wishlist.php"><i class="fa fa-list fa-2x"></i> <span class=
+                "nav-text">Your Wishlist</span></a>
+            </li>
+
+            <li>
+                <a href="http://uaks7607eb57.apogee.koding.io/accountsettings.html"><i class="fa fa-wrench fa-2x"></i>
+                <span class="nav-text">Account Settings</span></a>
+            </li>
+
+            <li>
+                <a href="http://uaks7607eb57.apogee.koding.io/about.html"><i class="fa fa-info fa-2x"></i> <span class=
+                "nav-text">About</span></a>
+            </li>
+
+        </ul>
+
+        <ul class="logout">
+            <li>
+                <a href="http://uaks7607eb57.apogee.koding.io/logout.html"><i class="fa fa-power-off fa-2x"></i> <span class=
+                "nav-text">Logout</span></a>
+            </li>
+        </ul>
+    </nav>
 
     <div id="wrapper">
 
@@ -221,15 +292,55 @@ else if(isset($_POST['submitWish'])){
 
                 </tbody>
             </table>
+
+
             <span>
                 <input id="submitWish" type="submit" value="Add to List" name="submitWish">
                 <input id="cancelWish" type="submit" value="Cancel" name="cancelWish">
             </span>
+
+
     </div>
 
-    <div id="mainPage">
+<!-- CHEAPEST IN DB -->
+    <div>
 
-        <div id="searchQuery">
+<?php if (isset($cheapestInDB))  { ?>
+
+    <h2> CHEAPEST IN THE DATABASE</h2>
+    <table border="1">
+
+        <tr>
+        <th>Name</th>
+        <th>Price</th>
+        <th>URL</th>
+        <th>Photo</th>
+        </tr>
+
+        <tr>
+        <td><?php echo $cheapestInDB['name'];  ?></td>
+        <td style="color:red"><?php echo $cheapestInDB['lowestPrice'];  ?></td>
+<?php echo '<td><a target="_blank" href=" ' .$cheapestInDB["URL"]  . ' ">' .$cheapestInDB["URL"] . '  </td>' ; ?>
+        <td><img src="<?php echo $cheapestInDB['photoURL'];  ?>" /></td>
+
+
+
+        </tr>
+    </table>
+
+
+
+
+
+<?php } ?>
+    </div>
+
+
+
+
+
+    <div id="mainPage">
+      <div id="searchQuery">
             <form method="POST" name="productSearch" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
 	            <input id="submit" name="submit" type="search" placeholder="Search">
             </form>
@@ -240,7 +351,7 @@ else if(isset($_POST['submitWish'])){
                 <thead>
                     <tr>
                         <th class="text-left">Name</th>
-                        <!--th class="text-left">Lowest Price</th-->
+                        <th style="color:red" class="text-left">Lowest Price</th>
                         <th class="text-left">Price</th>
                         <th class="text-left">URL</th>
                         <th class="text-left">Photo</th>
@@ -253,7 +364,7 @@ else if(isset($_POST['submitWish'])){
                                  <div>
                                    <form id="myForm" method="POST" name="productWish" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
                                     <!--form method="POST" name="productWish" action="wishlist.php"-->
-                                    	   <?php  if (isset($allProducts))
+                                     	   <?php  if (isset($allProducts))
 
 
                                             $webIDtemp = "";
@@ -281,6 +392,29 @@ else if(isset($_POST['submitWish'])){
                                                 $webID =  md5($currentItem["URL"]);
                                                // $webIDtemp .=  md5($currentItem["URL"]) .  ",";
 
+											 //########### GET THE PRICE OF THIS PRODUCT FROM DATABASE ########
+
+											  $conn = setUpConnection();
+
+											$sql = "SELECT lowestPrice
+													FROM Product
+													WHERE webID ='"  . $webID  . "';";
+
+											$result = $conn->query($sql);
+											
+											if ($result->num_rows > 0) {
+
+											   $row = $result->fetch_assoc();
+											  // while($row = $result->fetch_assoc()) {
+												    $lowestPrice =  $row['lowestPrice'];
+											   // }
+											}
+
+											$conn->close();
+											//###################################################
+
+
+
                                                $name = $currentItem["Name"];
                                                $url = $currentItem["URL"];
                                                $price = $currentItem["Price"];
@@ -288,6 +422,7 @@ else if(isset($_POST['submitWish'])){
 
 
                                                  echo '<td class="text-left">' . $currentItem["Name"]  . '</td>';
+												 echo '<td style="color:red" class="text-left">$' . $lowestPrice  . '</td>';
                                                  echo '<td class="text-left"> $' . $currentItem["Price"]  . '</td>';
                                                  echo '<td class="text-left"><a target="_blank" href=" ' . $currentItem["URL"]  . ' ">' . $currentItem["URL"] . '  </td>';
                                                  echo '<td class="text-left"><img src="' . $currentItem["Photo"]  . '"/>';
@@ -320,6 +455,9 @@ else if(isset($_POST['submitWish'])){
 
                                                 //THIS WOULD PASS THE webID to POST for PHP when Save to Wishlist is clicked
                                                  //HIDDEN INPUT
+
+                                                 echo '<input id="submitWishA" type="submit" value="Save List" name="submitWishList">';
+
                                                  echo "<input type='hidden' id='selectedWebIDs' name='selectedWebIDs'/>";
                                     	    ?>
                     	            </form>
@@ -328,10 +466,6 @@ else if(isset($_POST['submitWish'])){
 	            </table>
 	        </div>
         </div>
-
-    <div id="footer">
-        &copy; 2015 The Bargainers Ltd.
-    </div>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
     <script type="text/javascript" src="http://uaks7607eb57.apogee.koding.io//js/index_sidebar.js"></script>
     <script type="text/javascript" src="http://uaks7607eb57.apogee.koding.io//js/shop.js"></script>
