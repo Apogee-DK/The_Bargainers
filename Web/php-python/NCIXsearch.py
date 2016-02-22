@@ -80,7 +80,7 @@ for i in range(numOpen) :
 	#tempDict['Price'] =  elemPrice[0].getText()
 	price = linkPrices[i+2].getText()
 	price = price.replace("$", "")
-	tempDict['Price'] =float(price)
+	tempDict['Price'] = price
 	
 	tempDict['Photo'] = elemPic[0].get('src')
 	productList.append(tempDict)

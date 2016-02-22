@@ -63,7 +63,7 @@ input[type=text], input[type=password], textarea {
 
 #wrapper {
     height: 100%;
-    margin: 0 100px 0 250px; /*top right bottom left*/
+    margin: 0 0 0 250px; /*top right bottom left*/
     -moz-transition: margin-left ease .25s;
     -o-transition: margin-left ease .25s;
     -webkit-transition: margin-left ease .25s;
@@ -88,9 +88,9 @@ input[type=text], input[type=password], textarea {
 
 /*# is the id that you give to a certain div*/
 #main {
-    height: 92px; /*height of your side bar - padding*2*/ 
+    height: 40px; /*height of your side bar - padding*2*/ 
     background-color: #eee;
-    padding: 4px;
+    padding: 10px;
     margin: 0;
 }
 
@@ -104,17 +104,12 @@ input[type=text], input[type=password], textarea {
     color: #eee;
     position: fixed; /*We want it to be a fixed position --> specifically drawn in place where we want it to be*/
     height: auto;
+    overflow: visible;
     width: 150px;
+    top: 0;
     right: 0;
-    margin-right: -150px;
 }
 
-    #wishMenu .notEmpty{
-        margin-right: 150px;
-        overflow: visible;
-        
-    }
-    
     #wishListMenu{
         font-style: normal;
     }

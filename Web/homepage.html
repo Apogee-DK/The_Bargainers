@@ -5,34 +5,33 @@
     <link rel="stylesheet" href="http://uaks7607eb57.apogee.koding.io//css/index.css">
   </head>
   <body>
-  
+
     <div id="sidebarinfo">
         <img src="https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAXaAAAAJGIxNDMxZTA5LTlkMzMtNGZkNi1iY2E1LTE1ZGYzMGRmYTk1OA.jpg" alt="Headshot" class="headshot"/>
-        <span id="username">Guest</span> 
+        <span id="username">Guest</span>
         <button id="sidebarToggle">Toggle Menu</button>
-    </div>    
-    
+    </div>
+
     <div id="sidebarlinks"></div>
-        
+
     <div id="wrapper">
 
         <div id="main">
             <h1>The Bargainers</h1>
-            <p>Come here to find the cheapest products online!</p>
         </div>
-        
+
         <div id="mainPage" ng-controller="TodoListController as todoList">
             <span>{{todoList.remaining()}} of {{todoList.todos.length}} remaining</span>
             [ <a href="" ng-click="todoList.archive()">archive</a> ]
             <ul class="unstyled">
                 <li ng-repeat="todo in todoList.todos">
-                <label class="checkbox">    
+                <label class="checkbox">
                     <input type="checkbox" ng-model="todo.done">
                     <span class="done-{{todo.done}}">{{todo.text}}</span>
                 </label>
                 </li>
             </ul>
-            
+
             <form ng-submit="todoList.addTodo()">
                 <input type="text" ng-model="todoList.todoText"  size="30"
                        placeholder="add new todo here">
@@ -52,10 +51,10 @@
     <script type="text/javascript" src="http://uaks7607eb57.apogee.koding.io//js/index_controller.js"></script>
     <script type="text/javascript" src="https://apis.google.com/js/client.js?onload=OnLoadCallback"></script>
     <script type="text/javascript" src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>
-    
+
   </body>
 
-</html>  
+</html>
 
 
 

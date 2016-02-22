@@ -110,3 +110,16 @@ python product_list.py 110067946
 cd Web
 python product_list.py 110067946
 ungit
+python ./php-python/NCIXsearch.py mouse
+ls
+cd WEb
+cd Web
+ls
+cd php-python
+python NCIXsearch.py mouse
+python newegg.py monitor
+python NCIXsearch.py 'gtx 970'
+python NCIXsearch.py "gtx 970"
+python NCIXsearch.py gtx970
+gtx970
+python NCIXsearch.py gtx970

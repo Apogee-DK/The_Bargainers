@@ -38,12 +38,14 @@ div.table-title {
         text-align: center;
         height: 80px;
         width: 100%;
-        left: 0;
+        left: 2px;
+        padding: 4px;
         vertical-align: bottom;
 }
     
 #submitButton{
         height: 20px;
+        padding: 4px;
         width: 100%;
         vertical-align: bottom;
 }
