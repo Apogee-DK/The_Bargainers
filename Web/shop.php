@@ -226,7 +226,7 @@ else if(isset($_POST['submitWishList'])){
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
     <meta name="google-site-verification" content="PtlTebFoue90iB2Sc9zKLJRERVBuDYqTO50mBJqCgt0"/>
     <link rel="stylesheet" href="http://uaks7607eb57.apogee.koding.io//css/sidebar.css">
-    <link rel="stylesheet" href="http://uaks7607eb57.apogee.koding.io//css/viewpage.css">
+    <link rel="stylesheet" href="http://uaks7607eb57.apogee.koding.io//css/homepage.css">
     <link rel="stylesheet" href="http://uaks7607eb57.apogee.koding.io//css/shop.css">
     <link rel="stylesheet" href="http://uaks7607eb57.apogee.koding.io//css/searchToolbar.css">
     <meta charset="utf-8" />
@@ -272,10 +272,11 @@ else if(isset($_POST['submitWishList'])){
         </ul>
     </nav>
 
-    <div id="wrapper">
-
-        <div id="main">
-            <h2>The Bargainers</h2>
+    <div id="container">
+        <div id="main" role="main" class="hellobox">
+            <header><a href="http://koding.com">Koding.com</a></header>
+                <h1 class="shop">The Bargainers</h1>
+                <h2>Search Results</h2>
         </div>
 
 
@@ -401,7 +402,7 @@ else if(isset($_POST['submitWishList'])){
 													WHERE webID ='"  . $webID  . "';";
 
 											$result = $conn->query($sql);
-											
+
 											if ($result->num_rows > 0) {
 
 											   $row = $result->fetch_assoc();

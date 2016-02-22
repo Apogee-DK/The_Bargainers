@@ -42,14 +42,14 @@ div.table-title {
         padding: 4px;
         vertical-align: bottom;
 }
-    
+
 #submitButton{
         height: 20px;
         padding: 4px;
         width: 100%;
         vertical-align: bottom;
 }
- 
+
 th {
   color:#D5DDE5;
   background:#1b1e24;
@@ -66,12 +66,12 @@ th {
 th:first-child {
   border-top-left-radius:3px;
 }
- 
+
 th:last-child {
   border-top-right-radius:3px;
   border-right:none;
 }
-  
+
 tr {
   border-top: 1px solid #C1C3D1;
   border-bottom: 1px solid #C1C3D1;
@@ -91,9 +91,9 @@ tr:hover td {
 /*For selections*/
 .Selected td {
   background:#4E5066;
-  color:#FFFFFF; 
+  color:#FFFFFF;
 }
- 
+
 tr:first-child {
   border-top:none;
 }
@@ -101,15 +101,15 @@ tr:first-child {
 tr:last-child {
   border-bottom:none;
 }
- 
+
 tr:last-child td:first-child {
   border-bottom-left-radius:3px;
 }
- 
+
 tr:last-child td:last-child {
   border-bottom-right-radius:3px;
 }
- 
+
 td {
   background:#FFFFFF;
   text-align:left;
